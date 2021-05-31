@@ -1,8 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders should work', () => {
+jest.mock('./Routes', () => ({
+  __esModule: true,
+  default: () => <div data-testid="app-routes" />,
+}));
+
+test('renders learn react link', () => {
   render(<App />);
-  const element = screen.getByText(/React/i);
-  expect(element).toBeInTheDocument();
+  expect(screen.queryByTestId('app-routes')).toBeInTheDocument();
 });
