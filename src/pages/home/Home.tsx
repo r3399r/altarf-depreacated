@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div className={style.content}>
       <div className={style.button}>
-        <Button onClick={onClick('transition-matrix')}>轉移矩陣</Button>
+        <Button onClick={onClick('matrix')}>矩陣</Button>
       </div>
     </div>
   );

@@ -3,11 +3,13 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 const route = {
   Home: loadable(() => import('./pages/home/Home')),
+  Matrix: loadable(() => import('./pages/matrix/Matrix')),
 };
 
 const AppRoutes = () => {
   return (
     <Switch>
+      <Route exact={true} path="/matrix" component={route.Matrix} />
       <Route exact={true} path="/" component={route.Home} />
       <Redirect to="/" />
     </Switch>
