@@ -5,5 +5,5 @@
 /coverage
 
 # build
-/build
+/dist
 .env

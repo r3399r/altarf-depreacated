@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env BROWSER=none PORT=3002 react-scripts start",
-    "build": "react-scripts build",
+    "build": "cross-env BUILD_PATH='./dist' react-scripts build",
     "test": "react-scripts test --coverage",
     "test:nowatch": "npm run test -- --watchAll=false",
     "eject": "react-scripts eject",
@@ -14,7 +14,7 @@
     "fix:format": "npm run lint:format -- --write",
     "lint": "run-s lint:*",
     "fix": "run-s fix:*",
-    "clean": "del-cli build -f",
+    "clean": "del-cli dist -f",
     "pre:dev": "run-s clean fix build test:nowatch",
     "pre:commit": "run-s lint test:nowatch",
     "pre:deploy": "run-s clean build"
