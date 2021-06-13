@@ -17,7 +17,9 @@ const Home = () => {
         </Button>
       </div>
       <div className={style.button}>
-        <Button>作業</Button>
+        <Button onClick={onClick('homework')} disabled={true}>
+          作業
+        </Button>
       </div>
       <div className={style.button}>
         <Button onClick={onClick('quiz')}>測驗</Button>

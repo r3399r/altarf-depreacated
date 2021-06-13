@@ -11,10 +11,12 @@ const Quiz = () => {
 
   const [questions, setQeustions] = useState<string[]>([]);
   const [formDisable, setFormDisable] = useState<boolean>(false);
+  const [info, setInfo] = useState<{ quizId: string; userName: string }>();
 
   const onConfirm = (data: { quizId: string; userName: string }) => {
     getQuiz(data.quizId)
       .then((res: string[]) => {
+        setInfo(data);
         setQeustions(res);
         setFormDisable(true);
         message.success('題目讀取完成');
@@ -27,7 +29,9 @@ const Quiz = () => {
   const uploadImage = (i: number) => (file: File) => {
     const fileExt = file.name.split('.').pop();
 
-    uploadFile({ contents: file, path: `/quiz/${i}${fileExt}` })
+    if (info === undefined) throw Error('Something went wrong.');
+
+    uploadFile({ contents: file, path: `/quiz/${info.quizId}/${info.userName}-${i}.${fileExt}` })
       .then(() => {
         message.success(`第 ${i} 題上傳成功`);
       })
