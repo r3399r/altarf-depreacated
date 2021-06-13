@@ -16,7 +16,7 @@ const matrixMul = (mat1: number[][], mat2: number[][]) => {
   return formula;
 };
 
-const Home = () => {
+const Matrix = () => {
   const [step, setStep] = useState(0);
   const [stateArray, setStateArray] = useState([[[0.1], [0.9]]]);
 
@@ -46,4 +46,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Matrix;

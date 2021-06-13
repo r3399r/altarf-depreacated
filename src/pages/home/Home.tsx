@@ -12,7 +12,15 @@ const Home = () => {
   return (
     <div className={style.content}>
       <div className={style.button}>
-        <Button onClick={onClick('matrix')}>矩陣</Button>
+        <Button onClick={onClick('matrix')} disabled={true}>
+          學習
+        </Button>
+      </div>
+      <div className={style.button}>
+        <Button>作業</Button>
+      </div>
+      <div className={style.button}>
+        <Button onClick={onClick('quiz')}>測驗</Button>
       </div>
     </div>
   );

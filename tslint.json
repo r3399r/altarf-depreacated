@@ -30,7 +30,7 @@
       "no-var-requires": false,
       "object-literal-key-quotes": [true, "as-needed"],
       "ordered-imports": true,
-      // "quotemark": [true, "single", "jsx-double"],
+      "prefer-type-cast": false,
       "react-a11y-input-elements": false,
       "semicolon": [true, "always"],
       "typedef": [
