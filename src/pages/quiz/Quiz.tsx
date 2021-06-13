@@ -9,15 +9,15 @@ import style from './Quiz.module.scss';
 const Quiz = () => {
   const { register, handleSubmit } = useForm();
 
-  const [questions, setQeustions] = useState<string[]>([]);
+  const [questions, setQuestions] = useState<{ question: string; image: string }[]>([]);
   const [formDisable, setFormDisable] = useState<boolean>(false);
   const [info, setInfo] = useState<{ quizId: string; userName: string }>();
 
   const onConfirm = (data: { quizId: string; userName: string }) => {
     getQuiz(data.quizId)
-      .then((res: string[]) => {
+      .then((res: { question: string; image: string }[]) => {
         setInfo(data);
-        setQeustions(res);
+        setQuestions(res);
         setFormDisable(true);
         message.success('題目讀取完成');
       })
@@ -63,13 +63,20 @@ const Quiz = () => {
             disabled={formDisable}
           />
         </div>
-        <Button htmlType="submit">OK</Button>
+        <Button htmlType="submit" disabled={formDisable}>
+          OK
+        </Button>
       </form>
       {questions.length > 0 && (
         <div className={style.content}>
-          {questions.map((q: string, i: number) => (
+          {questions.map((q: { question: string; image: string }, i: number) => (
             <div key={i} className={style.card}>
-              <DivWithMath text={`${i + 1}. ${q}`} />
+              <DivWithMath text={`${i + 1}. ${q.question}`} />
+              {q.image && (
+                <div className={style.image}>
+                  <img alt="" role="presentation" src={q.image} />{' '}
+                </div>
+              )}
               <div className={style.right}>
                 <Upload beforeUpload={uploadImage(i + 1)}>
                   <Button>上傳計算過程</Button>

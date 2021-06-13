@@ -6,5 +6,5 @@ export const getQuiz = async (quizId: string) => {
   const sheet = doc.sheetsById[quizId];
   const rows = await sheet.getRows();
 
-  return rows.map((v: GoogleSpreadsheetRow) => v.question);
+  return rows.map((v: GoogleSpreadsheetRow) => ({ question: v.question, image: v.image }));
 };
