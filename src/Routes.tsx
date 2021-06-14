@@ -8,16 +8,14 @@ const route = {
   Matrix: loadable(() => import('./pages/matrix/Matrix')),
 };
 
-const AppRoutes = () => {
-  return (
-    <Switch>
-      <Route exact={true} path="/homework" component={route.Homework} />
-      <Route exact={true} path="/quiz" component={route.Quiz} />
-      <Route exact={true} path="/matrix" component={route.Matrix} />
-      <Route exact={true} path="/" component={route.Home} />
-      <Redirect to="/" />
-    </Switch>
-  );
-};
+const AppRoutes = () => (
+  <Switch>
+    <Route exact={true} path="/homework" component={route.Homework} />
+    <Route exact={true} path="/quiz" component={route.Quiz} />
+    <Route exact={true} path="/matrix" component={route.Matrix} />
+    <Route exact={true} path="/" component={route.Home} />
+    <Redirect to="/" />
+  </Switch>
+);
 
 export default AppRoutes;

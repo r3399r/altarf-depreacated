@@ -38,9 +38,9 @@ const Matrix = () => {
         <Button onClick={nextState}>下一個</Button>
       </div>
       <MathJax.Provider>
-        {Array.from({ length: step + 1 }, (_: any, i: number) => i).map((i: number) => {
-          return <MathJax.Node key={i} formula={matrixMul(transitionMat, stateArray[i])} />;
-        })}
+        {Array.from({ length: step + 1 }, (_: any, i: number) => i).map((i: number) => (
+          <MathJax.Node key={i} formula={matrixMul(transitionMat, stateArray[i])} />
+        ))}
       </MathJax.Provider>
     </div>
   );

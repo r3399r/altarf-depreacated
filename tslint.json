@@ -11,7 +11,7 @@
     "rules": {
       "align": [true, "parameters", "statements"],
       "array-type": false,
-      "arrow-return-shorthand": true,
+      "arrow-return-shorthand": [true, "multiline"],
       "ban-types": false,
       "curly": [true, "as-needed"],
       "eofline": true,
