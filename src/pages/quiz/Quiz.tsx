@@ -1,4 +1,5 @@
-import { Button, Input, message, Upload } from 'antd';
+import { Button, Input, message, Spin, Upload } from 'antd';
+import moment from 'moment';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import DivWithMath from 'src/components/DivWithMath';
@@ -12,8 +13,10 @@ const Quiz = () => {
   const [questions, setQuestions] = useState<{ question: string; image: string }[]>([]);
   const [formDisable, setFormDisable] = useState<boolean>(false);
   const [info, setInfo] = useState<{ quizId: string; userName: string }>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onConfirm = (data: { quizId: string; userName: string }) => {
+    setIsLoading(true);
     getQuiz(data.quizId)
       .then((res: { question: string; image: string }[]) => {
         setInfo(data);
@@ -23,6 +26,9 @@ const Quiz = () => {
       })
       .catch(() => {
         message.error('ID 不存在，請再次確認');
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -31,7 +37,12 @@ const Quiz = () => {
 
     if (info === undefined) throw Error('Something went wrong.');
 
-    uploadFile({ contents: file, path: `/quiz/${info.quizId}/${info.userName}-${i}.${fileExt}` })
+    uploadFile({
+      contents: file,
+      path: `/quiz/${info.quizId}/${info.userName}-${i}-${moment().format(
+        'YYYY-MM-DD HH.mm.ss',
+      )}.${fileExt}`,
+    })
       .then(() => {
         message.success(`第 ${i} 題上傳成功`);
       })
@@ -67,6 +78,11 @@ const Quiz = () => {
           OK
         </Button>
       </form>
+      {isLoading && (
+        <div className={style.loading}>
+          <Spin />
+        </div>
+      )}
       {questions.length > 0 && (
         <div className={style.content}>
           {questions.map((q: { question: string; image: string }, i: number) => (
