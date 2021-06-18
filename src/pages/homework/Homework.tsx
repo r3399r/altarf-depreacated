@@ -25,6 +25,8 @@ const Homework = () => {
   }, [currentFolder]);
 
   const onFolderClick = (folder: string) => () => {
+    setFiles(undefined);
+    setCurrentNumber(undefined);
     setCurrentFolder(folder);
   };
 
