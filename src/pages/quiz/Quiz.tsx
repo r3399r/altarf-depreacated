@@ -1,24 +1,33 @@
-import { Button, Input, message, Spin, Upload } from 'antd';
-import moment from 'moment';
+import { Button, Input, message, Modal, Spin } from 'antd';
+import { CheckboxValueType } from 'antd/lib/checkbox/Group';
+import classNames from 'classnames';
+import { sum } from 'mathjs';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import DivWithMath from 'src/components/DivWithMath';
-import { uploadFile } from 'src/services/dropboxService';
-import { getQuiz } from 'src/services/quizServices';
+import { checkUserAnswer, getQuiz, Question, QuestionType } from 'src/services/quizServices';
+import FillInBlank from './components/FillInBlank';
+import MultipleChoice from './components/MultipleChoice';
+import SingleChoice from './components/SingleChoice';
 import style from './Quiz.module.scss';
 
 const Quiz = () => {
   const { register, handleSubmit } = useForm();
+  const history = useHistory();
 
-  const [questions, setQuestions] = useState<{ question: string; image: string }[]>([]);
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [formDisable, setFormDisable] = useState<boolean>(false);
   const [info, setInfo] = useState<{ quizId: string; userName: string }>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [userAnswer, setUserAnswer] = useState<string[]>([]);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [checkResult, setCheckResult] = useState<number[]>();
 
   const onConfirm = (data: { quizId: string; userName: string }) => {
     setIsLoading(true);
     getQuiz(data.quizId)
-      .then((res: { question: string; image: string }[]) => {
+      .then((res: Question[]) => {
         setInfo(data);
         setQuestions(res);
         setFormDisable(true);
@@ -32,30 +41,47 @@ const Quiz = () => {
       });
   };
 
-  const uploadImage = (i: number) => (file: File) => {
-    const fileExt = file.name.split('.').pop();
+  const onBackClick = () => {
+    history.goBack();
+  };
 
-    if (info === undefined) throw Error('Something went wrong.');
+  const onChange = (i: number) => (value: string) => {
+    const currentAnswer = [...userAnswer];
+    currentAnswer[i] = value;
+    setUserAnswer(currentAnswer);
+  };
 
-    uploadFile({
-      contents: file,
-      path: `/quiz/${info.quizId}/${info.userName}-${i}-${moment().format(
-        'YYYY-MM-DD HH.mm.ss',
-      )}.${fileExt}`,
-    })
-      .then(() => {
-        message.success(`第 ${i} 題上傳成功`);
-      })
-      .catch(() => {
-        message.error(`第 ${i} 題上傳失敗，請通知老師`);
-      });
+  const onCheck = (i: number) => (value: CheckboxValueType[]) => {
+    const currentAnswer = [...userAnswer];
+    currentAnswer[i] = value.join();
+    setUserAnswer(currentAnswer);
+  };
 
-    return false;
+  const onSelect = (i: number, n: number) => (value: string) => {
+    const currentAnswer = [...userAnswer];
+    const ans = currentAnswer[i] ? currentAnswer[i].split(',') : [];
+    ans[n] = value;
+    currentAnswer[i] = ans.join();
+    setUserAnswer(currentAnswer);
+  };
+
+  const onSubmit = () => {
+    setIsModalVisible(true);
+  };
+
+  const onModalConfirm = () => {
+    setIsModalVisible(false);
+    setCheckResult(checkUserAnswer(questions, userAnswer));
+  };
+
+  const onModalCancel = () => {
+    setIsModalVisible(false);
   };
 
   return (
     <div className={style.main}>
       <form className={style.info} onSubmit={handleSubmit(onConfirm)} autoComplete="off">
+        <Button onClick={onBackClick}>回上一頁</Button>
         <div>
           試卷 ID
           <Input
@@ -83,25 +109,83 @@ const Quiz = () => {
           <Spin />
         </div>
       )}
-      {questions.length > 0 && (
-        <div className={style.content}>
-          {questions.map((q: { question: string; image: string }, i: number) => (
-            <div key={i} className={style.card}>
-              <DivWithMath text={`${i + 1}. ${q.question}`} />
-              {q.image && (
-                <div className={style.image}>
-                  <img alt="" role="presentation" src={q.image} />{' '}
-                </div>
-              )}
-              <div className={style.right}>
-                <Upload beforeUpload={uploadImage(i + 1)}>
-                  <Button>上傳計算過程</Button>
-                </Upload>
-              </div>
-            </div>
-          ))}
+      {checkResult && (
+        <div>
+          總分: {sum(checkResult)}/{questions.length * 10}
         </div>
       )}
+      {questions.length > 0 && (
+        <div>
+          <div className={style.content}>
+            {questions.map((q: Question, i: number) => (
+              <div
+                key={i}
+                className={classNames(style.card, {
+                  [style.wrong]: checkResult && checkResult[i] !== 10,
+                })}
+              >
+                <DivWithMath text={`${i + 1}. ${q.question}`} />
+                {q.image && (
+                  <div className={style.image}>
+                    <img alt="" role="presentation" src={q.image} />{' '}
+                  </div>
+                )}
+                <div className={style.center}>
+                  {checkResult && (
+                    <div>
+                      得分: {checkResult[i]}，參考答案: {q.answer}
+                    </div>
+                  )}
+                  {q.type === QuestionType.SINGLE && (
+                    <SingleChoice
+                      n={q.options}
+                      onChange={onChange(i)}
+                      disabled={checkResult !== undefined}
+                    />
+                  )}
+                  {q.type === QuestionType.MULTIPLE && (
+                    <MultipleChoice
+                      n={q.options}
+                      onChange={onCheck(i)}
+                      disabled={checkResult !== undefined}
+                    />
+                  )}
+                  {q.type === QuestionType.FILL_IN_BLANK && (
+                    <div className={style.fill}>
+                      {q.answer.split(',').map((_v: string, n: number) => (
+                        <div key={n}>
+                          {n + 1}:{' '}
+                          <FillInBlank
+                            onChange={onSelect(i, n)}
+                            disabled={checkResult !== undefined}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          {!checkResult && (
+            <div className={style.submitBtn}>
+              <Button type="primary" onClick={onSubmit}>
+                交卷
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
+      <Modal
+        visible={isModalVisible}
+        onOk={onModalConfirm}
+        onCancel={onModalCancel}
+        okText={'確認交卷'}
+        cancelText={'再看看'}
+        closable={false}
+      >
+        <p>請再次確認答題結果，確認交卷後將不能再作答</p>
+      </Modal>
     </div>
   );
 };

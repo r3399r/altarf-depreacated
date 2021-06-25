@@ -11,6 +11,7 @@ const Home = () => {
 
   return (
     <div className={style.content}>
+      <div>目前版本: v{process.env.REACT_APP_VERSION}</div>
       <div className={style.button}>
         <Button onClick={onClick('matrix')} disabled={true}>
           學習
