@@ -1,21 +1,27 @@
 import { lineLogin, lineRefresh } from 'src/api/line';
 import { setLoginStatus } from 'src/redux/authSlice';
-import { dispatch } from 'src/redux/store';
+import { dispatch, getState } from 'src/redux/store';
+import { initParameters } from './parameterService';
 
-const validateState = (state: string) => {
-  if (Date.now() - Number(state) < 10 * 60 * 1000) return;
+const REDIRECT_URI = 'http://localhost:3002';
+
+const validateState = (lineState: string) => {
+  if (Date.now() - Number(lineState) < 10 * 60 * 1000) return;
   throw new Error('wrong state');
 };
 
-export const loginByCode = async (code: string, state: string) => {
+export const loginByCode = async (code: string, lineState: string) => {
   try {
-    validateState(state);
+    validateState(lineState);
+
+    await initParameters();
+    const { parameter } = getState();
 
     const token = await lineLogin({
       code,
-      redirectUri: 'http://localhost:3002',
-      clientId: '1656147451',
-      clientSecret: 'e636c266d9c4ba1f5ad8e7996d2c5e4e',
+      redirectUri: REDIRECT_URI,
+      clientId: parameter.lineLoginId as string,
+      clientSecret: parameter.lineLoginSecret as string,
       grantType: 'authorization_code',
     });
 
@@ -38,9 +44,12 @@ export const loginBySavedToken = async () => {
   dispatch(setLoginStatus(true));
 
   try {
+    await initParameters();
+    const { parameter } = getState();
+
     const refreshedToken = await lineRefresh({
-      clientId: '1656147451',
-      clientSecret: 'e636c266d9c4ba1f5ad8e7996d2c5e4e',
+      clientId: parameter.lineLoginId as string,
+      clientSecret: parameter.lineLoginSecret as string,
       grantType: 'refresh_token',
       refreshToken,
     });
@@ -53,12 +62,15 @@ export const loginBySavedToken = async () => {
   }
 };
 
-export const getLink = () => {
+export const getLink = async () => {
+  await initParameters();
+  const { parameter } = getState();
+
   const url = 'https://access.line.me/oauth2/v2.1/authorize';
   const params = {
     response_type: 'code',
-    client_id: '1656147451',
-    redirect_uri: 'http://localhost:3002',
+    clientId: parameter.lineLoginId as string,
+    redirect_uri: REDIRECT_URI,
     state: `${Date.now()}`,
     scope: 'profile',
   };

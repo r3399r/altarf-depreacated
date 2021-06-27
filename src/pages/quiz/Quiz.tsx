@@ -1,4 +1,4 @@
-import { Button, Input, message, Modal, Spin } from 'antd';
+import { Button, Input, message, Modal } from 'antd';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import classNames from 'classnames';
 import { sum } from 'mathjs';
@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import DivWithMath from 'src/components/DivWithMath';
+import Loading from 'src/components/Loading';
 import { checkUserAnswer, getQuiz, Question, QuestionType } from 'src/services/quizServices';
 import FillInBlank from './components/FillInBlank';
 import MultipleChoice from './components/MultipleChoice';
@@ -104,11 +105,7 @@ const Quiz = () => {
           OK
         </Button>
       </form>
-      {isLoading && (
-        <div className={style.loading}>
-          <Spin />
-        </div>
-      )}
+      {isLoading && <Loading />}
       {checkResult && (
         <div>
           總分: {sum(checkResult)}/{questions.length * 10}
