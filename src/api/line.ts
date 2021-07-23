@@ -2,6 +2,7 @@ import axios from 'axios';
 import { LineLoginParams, LineRefreshParams, LineToken } from 'src/model/Line';
 
 const LINE_TOKEN_URL = 'https://api.line.me/oauth2/v2.1/token';
+const LINE_PROFILE_URL = 'https://api.line.me/v2/profile';
 
 export const lineLogin = async (params: LineLoginParams): Promise<LineToken> => {
   const data = new URLSearchParams();
@@ -27,6 +28,16 @@ export const lineRefresh = async (params: LineRefreshParams): Promise<LineToken>
 
   const res = await axios.post(LINE_TOKEN_URL, data, {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  });
+
+  return res.data;
+};
+
+export const getUserProfile = async (accessToken: string) => {
+  const res = await axios.get(LINE_PROFILE_URL, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
   return res.data;

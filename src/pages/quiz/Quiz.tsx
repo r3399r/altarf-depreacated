@@ -1,10 +1,9 @@
-import { Button, Input, message, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import classNames from 'classnames';
 import { sum } from 'mathjs';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import DivWithMath from 'src/components/DivWithMath';
 import Loading from 'src/components/Loading';
 import { checkUserAnswer, getQuiz, Question, QuestionType } from 'src/services/quizServices';
@@ -14,33 +13,46 @@ import SingleChoice from './components/SingleChoice';
 import style from './Quiz.module.scss';
 
 const Quiz = () => {
-  const { register, handleSubmit } = useForm();
+  // const { register, handleSubmit } = useForm();
   const history = useHistory();
+  const location = useLocation();
 
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [formDisable, setFormDisable] = useState<boolean>(false);
-  const [info, setInfo] = useState<{ quizId: string; userName: string }>();
+  // const [formDisable, setFormDisable] = useState<boolean>(false);
+  // const [info, setInfo] = useState<{ quizId: string; userName: string }>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userAnswer, setUserAnswer] = useState<string[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [checkResult, setCheckResult] = useState<number[]>();
 
-  const onConfirm = (data: { quizId: string; userName: string }) => {
+  useEffect(() => {
     setIsLoading(true);
-    getQuiz(data.quizId)
-      .then((res: Question[]) => {
-        setInfo(data);
+    getQuiz(location.state as string)
+      .then((res: any) => {
+        // console.log(res)
         setQuestions(res);
-        setFormDisable(true);
-        message.success('題目讀取完成');
-      })
-      .catch(() => {
-        message.error('ID 不存在，請再次確認');
       })
       .finally(() => {
         setIsLoading(false);
       });
-  };
+  }, [location]);
+
+  // const onConfirm = (data: { quizId: string; userName: string }) => {
+  //   setIsLoading(true);
+  //   getQuiz(data.quizId)
+  //     .then((res: Question[]) => {
+  //       setInfo(data);
+  //       setQuestions(res);
+  //       setFormDisable(true);
+  //       message.success('題目讀取完成');
+  //     })
+  //     .catch(() => {
+  //       message.error('ID 不存在，請再次確認');
+  //     })
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  // };
 
   const onBackClick = () => {
     history.goBack();
@@ -81,8 +93,9 @@ const Quiz = () => {
 
   return (
     <div className={style.main}>
-      <form className={style.info} onSubmit={handleSubmit(onConfirm)} autoComplete="off">
-        <Button onClick={onBackClick}>回上一頁</Button>
+      <Button onClick={onBackClick}>回上一頁</Button>
+      {/* <form className={style.info} onSubmit={handleSubmit(onConfirm)} autoComplete="off">
+
         <div>
           試卷 ID
           <Input
@@ -104,7 +117,7 @@ const Quiz = () => {
         <Button htmlType="submit" disabled={formDisable}>
           OK
         </Button>
-      </form>
+      </form> */}
       {isLoading && <Loading />}
       {checkResult && (
         <div>

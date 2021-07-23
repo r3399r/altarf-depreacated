@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { GoogleSpreadsheetRow } from 'google-spreadsheet';
+import { BASE_URL } from 'src/api/lambda';
 import { getSheet } from './googleSheetService';
 
 const SCORE_PER_QUESTION = 10;
@@ -17,7 +19,13 @@ export type Question = {
   image: string;
 };
 
-export const getQuiz = async (quizId: string): Promise<Question[]> => {
+export const getQuiz = async (quizId: string) => {
+  const res = await axios.get(`${BASE_URL}/quiz/${quizId}`);
+
+  return res.data.questions;
+};
+
+export const getQuizOld = async (quizId: string): Promise<Question[]> => {
   const doc = await getSheet('1utxZBaMApMJBPkOwkGo4-p22kC35OmqosZHR8dleJBQ');
   const sheet = doc.sheetsById[quizId];
   const rows = await sheet.getRows();

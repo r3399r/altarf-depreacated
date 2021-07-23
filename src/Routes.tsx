@@ -5,6 +5,7 @@ import { RootState } from './redux/store';
 
 const route = {
   Login: loadable(() => import('./pages/login/Login')),
+  Register: loadable(() => import('./pages/register/Register')),
   Home: loadable(() => import('./pages/home/Home')),
   Homework: loadable(() => import('./pages/homework/Homework')),
   Quiz: loadable(() => import('./pages/quiz/Quiz')),
@@ -12,12 +13,13 @@ const route = {
 };
 
 const AppRoutes = () => {
-  const { auth } = useSelector<RootState, RootState>((state: RootState) => state);
+  const { auth } = useSelector((rootState: RootState) => rootState);
 
-  if (!auth.isLogin)
+  if (auth.me === null)
     return (
       <Switch>
         <Route exact={true} path="/login" component={route.Login} />
+        <Route exact={true} path="/register" component={route.Register} />
         <Route exact={true} path="/" component={route.Home} />
         <Redirect to="/login" />
       </Switch>
