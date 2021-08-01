@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL, me } from 'src/api/lambda';
+import { me } from 'src/api/lambda';
 import { getUserProfile } from 'src/api/line';
 import { setMe } from 'src/redux/authSlice';
 import { dispatch } from 'src/redux/store';
@@ -19,7 +19,7 @@ export const registerUser = async (data: any) => {
 
     const lineUserProfile = await getUserProfile(accessToken!);
 
-    const res = await axios.post(`${BASE_URL}/users`, {
+    const res = await axios.post('/api/users', {
       lineUserId: lineUserProfile.userId,
       name: data.name,
       role: data.role,

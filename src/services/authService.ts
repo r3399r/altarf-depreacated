@@ -3,7 +3,7 @@ import { setLoginStatus } from 'src/redux/authSlice';
 import { dispatch, getState } from 'src/redux/store';
 import { initParameters } from './parameterService';
 
-const REDIRECT_URI = 'http://localhost:3002';
+const REDIRECT_URI = `${window.location.origin}/login`;
 
 const validateState = (lineState: string) => {
   if (Date.now() - Number(lineState) < 10 * 60 * 1000) return;
@@ -44,7 +44,6 @@ export const loginBySavedToken = async () => {
   dispatch(setLoginStatus(true));
 
   try {
-    await initParameters();
     const { parameter } = getState();
 
     const refreshedToken = await lineRefresh({

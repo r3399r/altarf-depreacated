@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from './redux/store';
 import AppRoutes from './Routes';
+import { loginBySavedToken } from './services/authService';
 import { initParameters } from './services/parameterService';
 import { getMe } from './services/userService';
 
@@ -11,7 +12,7 @@ const App = () => {
   const { auth } = useSelector((rootState: RootState) => rootState);
 
   useEffect(() => {
-    initParameters();
+    initParameters().then(loginBySavedToken);
   }, []);
 
   useEffect(() => {
