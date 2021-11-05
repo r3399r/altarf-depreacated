@@ -20,6 +20,7 @@
     "pre:deploy": "run-s clean build"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@loadable/component": "^5.15.0",
     "@reduxjs/toolkit": "^1.6.2",
     "antd": "^4.16.13",
@@ -27,6 +28,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.19.0",
+    "react-media-hook": "^0.4.9",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
