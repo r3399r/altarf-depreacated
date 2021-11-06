@@ -17,9 +17,10 @@
     flex: 1;
     gap: 10px;
     font-size: 25px;
+    font-weight: bold;
     cursor: pointer;
     @media (min-width: $sm) {
-      flex: 0;
+      flex: unset;
     }
     > img {
       height: 35px;

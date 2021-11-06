@@ -1,0 +1,16 @@
+@import '/src/style/variables';
+
+.self {
+  background-color: $pink;
+  padding: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+.map {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.line {
+  width: 200px;
+}

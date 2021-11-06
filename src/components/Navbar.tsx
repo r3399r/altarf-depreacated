@@ -26,9 +26,9 @@ const Navbar = () => {
   };
 
   const LogoComponent = (
-    <div className={style.logo}>
+    <div className={style.logo} onClick={onPageClick('/')} role="button">
       <img alt="" role="presentation" src={Logo} />
-      <div>ALTARF</div>
+      <div>ALTARF 數理學院</div>
     </div>
   );
 
@@ -44,7 +44,7 @@ const Navbar = () => {
         認識我們
       </div>
       <div onClick={onPageClick('/about-class')} role="button">
-        上課時間與收費
+        課程規劃
       </div>
       <div onClick={onPageClick('/common-questions')} role="button">
         常見問題
