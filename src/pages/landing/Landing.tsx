@@ -1,7 +1,5 @@
-import style from './Landing.module.scss';
-
 const Landing = () => (
-  <div className={style.self}>
+  <div>
     <h1>ALTARF 數理學院－理念與特色</h1>
     <h2>ALTARF 理念</h2>
     <p>

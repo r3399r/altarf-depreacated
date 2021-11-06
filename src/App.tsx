@@ -5,7 +5,9 @@ import AppRoutes from './Routes';
 
 const App = () => (
   <div>
-    <Navbar />
+    <div className={style.navbar}>
+      <Navbar />
+    </div>
     <div className={style.container}>
       <AppRoutes />
     </div>

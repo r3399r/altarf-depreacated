@@ -26,9 +26,11 @@ const Navbar = () => {
   };
 
   const LogoComponent = (
-    <div className={style.logo} onClick={onPageClick('/')} role="button">
-      <img alt="" role="presentation" src={Logo} />
-      <div>ALTARF 數理學院</div>
+    <div className={style.logo}>
+      <div onClick={onPageClick('/')} role="button">
+        <img alt="" role="presentation" src={Logo} />
+        <div>ALTARF 數理學院</div>
+      </div>
     </div>
   );
 
