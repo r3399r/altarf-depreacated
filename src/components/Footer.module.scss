@@ -5,6 +5,13 @@
   padding: 20px;
   text-align: center;
   font-weight: bold;
+  display: block;
+  @media (min-width: $sm) {
+    display: flex;
+    > div {
+      width: 50%;
+    }
+  }
 }
 .map {
   display: flex;
@@ -13,4 +20,5 @@
 }
 .line {
   width: 200px;
+  margin-top: 5px;
 }

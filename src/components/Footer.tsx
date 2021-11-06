@@ -1,10 +1,13 @@
+import { useMediaPredicate } from 'react-media-hook';
+import { MEDIA } from 'src/constants/media';
 import useWindowDimensions from 'src/hooks/WindowDimensions';
 import QrCode from 'src/images/line-qrcode.jpg';
 import style from './Footer.module.scss';
 
 const Footer = () => {
   const screenSize = useWindowDimensions();
-  const mapWidth = screenSize.width > 440 ? 420 : screenSize.width - 20;
+  const biggerThanSm = useMediaPredicate(MEDIA.SM);
+  const mapWidth = biggerThanSm ? 420 : screenSize.width - 20;
   const mapHeight = mapWidth * 0.7;
 
   return (
@@ -21,10 +24,12 @@ const Footer = () => {
           title="map"
         />
       </div>
-      <div>地址：新北市淡水區重建街 63 號</div>
-      <div>聯絡電話：0912-217-393 張老師</div>
-      <div>LINE：r3399r 或掃描條碼</div>
-      <img className={style.line} alt="" role="presentation" src={QrCode} />
+      <div>
+        <div>地址：新北市淡水區重建街 63 號</div>
+        <div>聯絡電話：0912-217-393 張老師</div>
+        <div>LINE：r3399r 或掃描條碼</div>
+        <img className={style.line} alt="" role="presentation" src={QrCode} />
+      </div>
     </div>
   );
 };

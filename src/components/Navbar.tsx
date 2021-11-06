@@ -34,9 +34,6 @@ const Navbar = () => {
 
   const PagesComponent = (
     <div className={style.pages}>
-      <div onClick={onPageClick('/')} role="button">
-        首頁
-      </div>
       <div onClick={onPageClick('/learning-resource')} role="button">
         學習資源
       </div>
