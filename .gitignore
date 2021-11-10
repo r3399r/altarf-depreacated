@@ -1,8 +1,14 @@
 # dependencies
 /node_modules
+/frontend/node_modules
+/backend/node_modules
 
 # test
-/coverage
+/frontend/coverage
+/backend/tmp
+/backend/coverage
 
 # build
-/dist
+/frontend/dist
+/backend/dist
+/backend/build
