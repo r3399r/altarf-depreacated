@@ -1,4 +1,4 @@
-import { MenuOutlined } from '@ant-design/icons';
+import { MenuOutlined, UserOutlined } from '@ant-design/icons';
 import { Drawer } from 'antd';
 import { useState } from 'react';
 import { useMediaPredicate } from 'react-media-hook';
@@ -39,15 +39,13 @@ const Navbar = () => {
       <div onClick={onPageClick('/learning-resource')} role="button">
         學習資源
       </div>
-      <div onClick={onPageClick('/about-us')} role="button">
-        認識我們
-      </div>
       <div onClick={onPageClick('/about-class')} role="button">
-        課程規劃
+        關於課程
       </div>
       <div onClick={onPageClick('/common-questions')} role="button">
         常見問題
       </div>
+      <UserOutlined onClick={onPageClick('/user')} />
     </div>
   );
 
