@@ -29,14 +29,17 @@ const Navbar = () => {
     <div className={style.logo}>
       <div onClick={onPageClick('/')} role="button">
         <img alt="" role="presentation" src={Logo} />
-        <div>ALTARF 數理學院</div>
+        <div>ALTARF 數學院</div>
       </div>
     </div>
   );
 
   const PagesComponent = (
     <div className={style.pages}>
-      <div onClick={onPageClick('/learning-resource')} role="button">
+      <div onClick={onPageClick('/landing')} role="button">
+        首頁
+      </div>
+      <div onClick={onPageClick('/learning')} role="button">
         學習資源
       </div>
       <div onClick={onPageClick('/about-class')} role="button">

@@ -1,0 +1,32 @@
+@import '/src/style/variables';
+
+@mixin block {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.yellow {
+  @include block;
+  background-color: $pale-yellow;
+  > div {
+    @include block;
+    background-color: $light-yellow;
+  }
+}
+.blue {
+  @include block;
+  background-color: $pale-blue;
+  > div {
+    @include block;
+    background-color: $light-blue;
+  }
+}
+.green {
+  @include block;
+  background-color: $pale-green;
+  > div {
+    @include block;
+    background-color: $light-green;
+  }
+}

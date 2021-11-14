@@ -1,0 +1,32 @@
+@import '/src/style/variables';
+
+.self {
+  margin-bottom: 150px;
+}
+.blocks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  > div {
+    width: 160px;
+    height: 160px;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .yellow {
+    background-color: $light-yellow;
+  }
+  .blue {
+    background-color: $light-blue;
+  }
+  .green {
+    background-color: $light-green;
+  }
+}

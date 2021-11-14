@@ -60,6 +60,7 @@
     ],
     "ordered-imports": true,
     "prefer-type-cast": false,
+    "react-a11y-accessible-headings": false,
     "react-a11y-input-elements": false,
     "react-iframe-missing-sandbox": false,
     "semicolon": [

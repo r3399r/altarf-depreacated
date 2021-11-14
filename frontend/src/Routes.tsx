@@ -3,7 +3,10 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 const route = {
   Landing: loadable(() => import('./pages/landing/Landing')),
-  LearningResource: loadable(() => import('./pages/learningResource/LearningResource')),
+  Learning: loadable(() => import('./pages/learning/Learning')),
+  Random: loadable(() => import('./pages/learning/Random')),
+  Bank: loadable(() => import('./pages/learning/Bank')),
+  Interactive: loadable(() => import('./pages/learning/Interactive')),
   AboutClass: loadable(() => import('./pages/aboutClass/AboutClass')),
   CommonQuestions: loadable(() => import('./pages/commonQuestions/CommonQuestions')),
   User: loadable(() => import('./pages/user/User')),
@@ -11,7 +14,10 @@ const route = {
 
 const AppRoutes = () => (
   <Switch>
-    <Route exact={true} path="/learning-resource" component={route.LearningResource} />
+    <Route exact={true} path="/learning" component={route.Learning} />
+    <Route exact={true} path="/learning/random" component={route.Random} />
+    <Route exact={true} path="/learning/bank" component={route.Bank} />
+    <Route exact={true} path="/learning/interactive" component={route.Interactive} />
     <Route exact={true} path="/about-class" component={route.AboutClass} />
     <Route exact={true} path="/common-questions" component={route.CommonQuestions} />
     <Route exact={true} path="/user" component={route.User} />

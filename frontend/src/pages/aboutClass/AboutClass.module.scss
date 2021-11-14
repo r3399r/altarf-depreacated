@@ -1,0 +1,16 @@
+@import '/src/style/variables';
+
+.schedule {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  > div {
+    width: 100%;
+    @media (min-width: $sm) {
+      width: 70%;
+    }
+  }
+}
+.center {
+  text-align: center;
+}
