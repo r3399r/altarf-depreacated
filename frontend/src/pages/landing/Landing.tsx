@@ -30,8 +30,8 @@ const Landing = () => (
       </div>
     </div>
     <div className={style.blue}>
+      <h2>小班制家教班</h2>
       <div>
-        <h2>小班制家教班</h2>
         <h3>彈性課程安排</h3>
         <p>
           上課是以<b>家教班</b>的形式，班上的學生人數為 6

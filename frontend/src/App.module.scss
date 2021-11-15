@@ -1,8 +1,17 @@
+@import 'style/scrollbar';
+
 .navbar {
-  position: fixed;
   height: 44px;
   width: 100%;
 }
 .container {
-  padding: 64px 20px 20px 20px;
+  height: calc(100vh - 44px);
+  overflow-y: auto;
+  @include scrollbar;
+  .routes {
+    padding: 10px;
+    @media (min-width: $sm) {
+      padding: 20px;
+    }
+  }
 }

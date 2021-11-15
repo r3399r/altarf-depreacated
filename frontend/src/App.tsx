@@ -9,9 +9,11 @@ const App = () => (
       <Navbar />
     </div>
     <div className={style.container}>
-      <AppRoutes />
+      <div className={style.routes}>
+        <AppRoutes />
+      </div>
+      <Footer />
     </div>
-    <Footer />
   </div>
 );
 

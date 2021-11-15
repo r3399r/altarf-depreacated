@@ -1,5 +1,22 @@
 @import '/src/style/variables';
 
+@mixin block {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.flex {
+  display: block;
+  @media (min-width: $md) {
+    display: flex;
+    gap: 20px;
+    > div {
+      width: 50%;
+    }
+  }
+}
+
 .schedule {
   display: flex;
   justify-content: center;
@@ -9,8 +26,31 @@
     @media (min-width: $sm) {
       width: 70%;
     }
+    @media (min-width: $md) {
+      width: 100%;
+    }
+    @media (min-width: $lg) {
+      width: 70%;
+    }
   }
 }
 .center {
   text-align: center;
+}
+
+.yellow {
+  @include block;
+  background-color: $light-yellow;
+}
+.blue {
+  @include block;
+  background-color: $light-blue;
+}
+.green {
+  @include block;
+  background-color: $pale-green;
+  > div {
+    @include block;
+    background-color: $light-green;
+  }
 }

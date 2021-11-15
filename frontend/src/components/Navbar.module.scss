@@ -1,7 +1,8 @@
 @import '/src/style/variables';
 
 .self {
-  background-color: $theme;
+  background-color: $navabr;
+  height: 100%;
   padding: 0 10px;
   display: flex;
   align-items: center;

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useMediaPredicate } from 'react-media-hook';
 import { useHistory } from 'react-router';
 import { MEDIA } from 'src/constants/media';
+import { PAGES } from 'src/constants/pages';
 import Logo from 'src/images/logo.png';
 import style from './Navbar.module.scss';
 
@@ -36,19 +37,19 @@ const Navbar = () => {
 
   const PagesComponent = (
     <div className={style.pages}>
-      <div onClick={onPageClick('/landing')} role="button">
+      <div onClick={onPageClick(PAGES.LANDING)} role="button">
         首頁
       </div>
-      <div onClick={onPageClick('/learning')} role="button">
+      <div onClick={onPageClick(PAGES.LEARNING)} role="button">
         學習資源
       </div>
-      <div onClick={onPageClick('/about-class')} role="button">
+      <div onClick={onPageClick(PAGES.ABOUT_CLASS)} role="button">
         關於課程
       </div>
-      <div onClick={onPageClick('/common-questions')} role="button">
+      <div onClick={onPageClick(PAGES.QUESTIONS)} role="button">
         常見問題
       </div>
-      <UserOutlined onClick={onPageClick('/user')} />
+      <UserOutlined onClick={onPageClick(PAGES.USER)} />
     </div>
   );
 
