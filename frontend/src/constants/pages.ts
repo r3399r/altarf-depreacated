@@ -11,3 +11,10 @@ export enum LEARNING {
   BANK = 'bank',
   SELF_TAUGHT = 'self-taught',
 }
+
+export enum QUESTIONS {
+  DIFFERENCE = 'difference',
+  RANDOM = 'random',
+  BANK = 'bank',
+  SELF_TAUGHT = 'self-taught',
+}

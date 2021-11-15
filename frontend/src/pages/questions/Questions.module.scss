@@ -4,10 +4,10 @@
   margin-bottom: 150px;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   > div {
-    width: 160px;
-    height: 160px;
+    flex: 1 0 40%;
+    height: 180px;
     padding: 10px;
     border-radius: 8px;
     display: flex;
@@ -15,8 +15,12 @@
     justify-content: center;
     text-align: center;
 
-    font-size: 30px;
+    font-size: 25px;
     cursor: pointer;
+    @media (min-width: $sm) {
+      width: 180px;
+      flex: unset;
+    }
   }
   .yellow {
     background-color: $light-yellow;
@@ -29,8 +33,5 @@
   }
   .orange {
     background-color: $light-orange;
-  }
-  .red {
-    background-color: $light-red;
   }
 }

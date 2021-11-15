@@ -1,6 +1,6 @@
 import loadable from '@loadable/component';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { LEARNING, PAGES } from './constants/pages';
+import { LEARNING, PAGES, QUESTIONS } from './constants/pages';
 
 const route = {
   Landing: loadable(() => import('./pages/landing/Landing')),
@@ -10,6 +10,10 @@ const route = {
   SelfTaught: loadable(() => import('./pages/learning/SelfTaught')),
   AboutClass: loadable(() => import('./pages/aboutClass/AboutClass')),
   Questions: loadable(() => import('./pages/questions/Questions')),
+  QuestionDifference: loadable(() => import('./pages/questions/Difference')),
+  QuestionRandom: loadable(() => import('./pages/questions/Random')),
+  QuestionBank: loadable(() => import('./pages/questions/Bank')),
+  QuestionSelfTaught: loadable(() => import('./pages/questions/SelfTaught')),
   User: loadable(() => import('./pages/user/User')),
 };
 
@@ -25,6 +29,26 @@ const AppRoutes = () => (
     />
     <Route exact={true} path={`/${PAGES.ABOUT_CLASS}`} component={route.AboutClass} />
     <Route exact={true} path={`/${PAGES.QUESTIONS}`} component={route.Questions} />
+    <Route
+      exact={true}
+      path={`/${PAGES.QUESTIONS}/${QUESTIONS.DIFFERENCE}`}
+      component={route.QuestionDifference}
+    />
+    <Route
+      exact={true}
+      path={`/${PAGES.QUESTIONS}/${QUESTIONS.RANDOM}`}
+      component={route.QuestionRandom}
+    />
+    <Route
+      exact={true}
+      path={`/${PAGES.QUESTIONS}/${QUESTIONS.BANK}`}
+      component={route.QuestionBank}
+    />
+    <Route
+      exact={true}
+      path={`/${PAGES.QUESTIONS}/${QUESTIONS.SELF_TAUGHT}`}
+      component={route.QuestionSelfTaught}
+    />
     <Route exact={true} path={`/${PAGES.USER}`} component={route.User} />
     <Route exact={true} path="/" component={route.Landing} />
     <Redirect to="/" />
